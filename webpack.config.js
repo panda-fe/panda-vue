@@ -6,8 +6,8 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, './dist'),
     publicPath: '/dist/',
-    filename: 'pandavue.js',
-    library: 'pandavue',
+    filename: 'panda-vue.js',
+    library: 'panda-vue',
     libraryTarget: 'umd',
     umdNamedDefine: true
   },

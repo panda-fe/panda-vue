@@ -1,4 +1,4 @@
-import BasicTable from './src/main';
+import BasicTable from './src/main.vue';
 
 /* istanbul ignore next */
 BasicTable.install = function(Vue) {

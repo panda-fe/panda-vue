@@ -1,4 +1,5 @@
-import BasicTable from '../packages/basictable/index.js'
+// import BasicTable from '../packages/basictable/index.js'
+var BasicTable = require('../packages/basictable/index.js')
 
 const components = [
   BasicTable
