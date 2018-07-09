@@ -1,5 +1,6 @@
-// import BasicTable from '../packages/basictable/index.js'
-var BasicTable = require('../packages/basictable/index.js')
+import BasicTable from '../packages/basictable/index.js'
+
+import packageInfo from '../package.json'
 
 const components = [
   BasicTable
@@ -35,7 +36,6 @@ const install = function(Vue, opts = {}) {
   // Vue.prototype.$myMethod = function (options) {
   //   // 逻辑...
   // }
-
 }
 
 /* istanbul ignore if */
@@ -43,8 +43,8 @@ if (typeof window !== 'undefined' && window.Vue) {
   install(window.Vue)
 }
 
-module.exports = {
+export default {
+  version: packageInfo.version,
+  install,
   BasicTable
 }
-
-module.exports.default = module.exports
