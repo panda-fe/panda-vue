@@ -1,7 +1,7 @@
 {
   "name": "panda-vue",
   "description": "Panda-fa vue awesome",
-  "version": "0.0.3",
+  "version": "0.0.9",
   "author": "PandaFET<x020198@qq.com>",
   "main": "dist/panda-vue.js",
   "license": "MIT",
