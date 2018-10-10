@@ -25,13 +25,13 @@
             <el-tooltip v-for="(operate,index) in column.operations" placement="top"
                         :content="operate.label"
                         :key="index">
-              <el-button type="text" class="form-icon"
+              <el-button :type="operate.type||'text'" class="form-icon"
                          v-show="operate.show?operate.show(scope.$index, scope.row):true"
                          :key="index"
                          :icon="operate.icon"
                          :style="operate.disabledfunc?!operate.disabledfunc(scope.$index,scope.row)?'color:'+(operate.color||'#5576ed'):'':'color:'+(operate.color||'#5576ed')"
                          @click="operate.func(scope.$index, scope.row)"
-                         :disabled="operate.disabledfunc ?operate.disabledfunc(scope.$index,scope.row) :false"></el-button>
+                         :disabled="operate.disabledfunc ?operate.disabledfunc(scope.$index,scope.row) :false">{{(operate.type&&operate.type!=='text')||!operate.icon?operate.label:''}}</el-button>
             </el-tooltip>
           </template>
         </el-table-column>
@@ -54,6 +54,7 @@
               {{scope.row[column.prop]}}
             </a>
             <span v-else='column.formatBeside'>{{column.formatBeside(scope.$index, scope.row)}}</span>
+            <i v-if="column.icon&&column.showIcon&&column.showIcon(scope.$index, scope.row)" :class="column.icon"></i>
             <!--</el-tooltip>-->
           </template>
         </el-table-column>
