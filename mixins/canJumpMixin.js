@@ -3,7 +3,7 @@
  * 功能: 在组件要跳转的时候多此一举的拦住用户并且问他，你真的要跳转吗 _(:з」∠)_
  */
 
-const canJump = {
+const canJumpMixin = {
   data() {
     return {
       $_canJump: true,                       // 是否可以直接跳转
@@ -41,4 +41,4 @@ const canJump = {
   }
 }
 
-export default canJump
+export default canJumpMixin
