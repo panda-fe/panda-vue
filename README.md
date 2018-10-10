@@ -1,5 +1,5 @@
 # panda-vue
-![npm](https://img.shields.io/npm/v/panda-vue.svg)
+[![npm](https://img.shields.io/npm/v/panda-vue.svg)](https://www.npmjs.com/package/panda-vue)
 ![license](https://img.shields.io/github/license/jserwang/rc-bmap.svg)
 
 > by Panda-FET

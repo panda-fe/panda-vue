@@ -1,7 +1,7 @@
 {
   "name": "panda-vue",
   "description": "Repository of Panda Front End Team",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "author": "panda-fe<x020198@qq.com>",
   "main": "dist/panda-vue.js",
   "license": "MIT",
