@@ -2,7 +2,7 @@
   "name": "panda-vue",
   "description": "Panda-fa vue awesome",
   "version": "0.1.5",
-  "author": "PandaFET<x020198@qq.com>",
+  "author": "panda-fe<x020198@qq.com>",
   "main": "dist/panda-vue.js",
   "license": "MIT",
   "private": false,
@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/AllenXin/panda-vue.git"
+    "url": "git+https://github.com/panda-fe/panda-vue"
   },
   "dependencies": {
     "vue": "^2.5.11"
@@ -27,7 +27,7 @@
     "panda"
   ],
   "bugs": {
-    "url": "https://github.com/AllenXin/panda-vue/issues"
+    "url": "https://github.com/panda-fe/panda-vue/issues"
   },
   "peerDependencies": {
     "element-ui": "^2.2.1",
