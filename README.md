@@ -1,5 +1,9 @@
 # panda-vue
+[![npm](https://img.shields.io/npm/v/panda-vue.svg)](https://www.npmjs.com/package/panda-vue)
+![license](https://img.shields.io/github/license/jserwang/rc-bmap.svg)
+
 > by Panda-FET
+
 
 
 ## Contents
@@ -18,6 +22,8 @@
 ## ToDos
 
 - [ ] 按需加载与全局加载可选切换
+- [ ] 文档 Docs
+- [ ] mixins、components的使用Demo
 
 
 
@@ -41,3 +47,6 @@
 }
 ```
 
+## 协议
+
+[MIT 许可证](https://opensource.org/licenses/MIT)
