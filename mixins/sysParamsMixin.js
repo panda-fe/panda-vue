@@ -5,7 +5,7 @@
  * 功能: 获取系统数据字典
  */
 
-const sysParamsMixin = {
+export default {
   data() {
     return {
       $_filterFunc: null,       // 过滤器函数
@@ -57,5 +57,3 @@ const sysParamsMixin = {
     }
   }
 }
-
-export default sysParamsMixin
