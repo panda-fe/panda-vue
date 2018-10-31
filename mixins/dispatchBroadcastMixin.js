@@ -6,10 +6,10 @@
 
 function broadcast(componentName, eventName, ...params) {
   this.$children.forEach(child => {
-    const name = child.$options.componentName
+    const name = child.$options.name
     
     if (name === componentName) {
-      child.$emit.call(child, eventName, ...params)
+      child.$emit(eventName, ...params)
     } else {
       broadcast.call(child, componentName, eventName, ...params)
     }
@@ -19,20 +19,20 @@ function broadcast(componentName, eventName, ...params) {
 export default {
   methods: {
     /**
-     * 提交事件
+     * 提交事件，子组件往祖先元素提交事件
      * @param componentName 组件名
      * @param eventName 事件名
      * @param params 参数
      */
-    _dispatch(componentName, eventName, ...params) {
+    $dispatch(componentName, eventName, ...params) {
       let parent = this.$parent || this.$root
-      let name = parent.$options.componentName
+      let name = parent.$options.name
       
       while (parent && (!name || name !== componentName)) {
         parent = parent.$parent
-        parent && (name = parent.$options.componentName)
+        parent && (name = parent.$options.name)
       }
-      parent && parent.$emit.call(parent, eventName, ...params)
+      parent && parent.$emit(eventName, ...params)
     },
     
     /**
@@ -41,7 +41,7 @@ export default {
      * @param eventName 事件名
      * @param params 参数
      */
-    _broadcast(componentName, eventName, ...params) {
+    $broadcast(componentName, eventName, ...params) {
       broadcast.call(this, componentName, eventName, ...params)
     }
   }
