@@ -85,6 +85,21 @@
                          :min-width='column.minwidth'>
         </el-table-column>
 
+        <!--进度条-->
+        <el-table-column v-else-if="column.progress"
+                         :prop="column.prop"
+                         :label="column.label"
+                         :width="column.width"
+                         :min-width='column.minwidth'>
+          <template slot-scope="scope">
+            <el-progress :stroke-width="column.progress.strokeWidth || 20"
+                         :percentage="Number(scope.row[column.prop])"
+                         :color="column.progress.color ? column.progress.color(scope.$index, scope.row) : ''"
+                         :style="column.progress.width ? 'width: ' + (column.progress.width + 50) + 'px;' : 'width: 114px;'">
+            </el-progress>
+          </template>
+        </el-table-column>
+
         <!--普通展示列-->
         <el-table-column v-else
                          :prop="column.prop"
@@ -122,7 +137,9 @@
       columns: { type: Array },
       initCondition: { type: Object },
       hasIndex: { type: Boolean, default: false},   // 是否需要序号列
-      hasSelect: { type: Boolean, default: false}   // 是否需要选择框
+      hasSelect: { type: Boolean, default: false},   // 是否需要选择框
+      searchAtOnce: { type: Boolean, default: true },   // 是否首次打开查询
+      emitAfterApi: { type: Function, default: () => {}}     // 调用Api后执行的钩子
     },
     data() {
       return {
@@ -149,6 +166,7 @@
           const { total, dataList } = res.data
           this.dataList = dataList
           this.total = total
+          this.emitAfterApi(this)
           this.listLoading = false
         }).catch((err) => {
           console.error(err)
@@ -215,7 +233,7 @@
       }
     },
     mounted() {
-      this.search(this.initCondition)
+      this.searchAtOnce && this.search(this.initCondition)
     }
   }
 </script>
