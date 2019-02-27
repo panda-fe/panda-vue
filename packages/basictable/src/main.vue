@@ -22,17 +22,35 @@
                          fixed="right"
                          :min-width='column.minwidth'>
           <template slot-scope="scope">
-            <el-tooltip v-for="(operate,index) in column.operations" placement="top"
-                        :content="operate.label"
-                        :key="index">
-              <el-button :type="operate.type||'text'" class="form-icon"
-                         v-show="operate.show?operate.show(scope.$index, scope.row):true"
-                         :key="index"
-                         :icon="operate.icon"
-                         :style="operate.disabledfunc?!operate.disabledfunc(scope.$index,scope.row)?'color:'+(operate.color||'#5576ed'):'':'color:'+(operate.color||'#5576ed')"
-                         @click="operate.func(scope.$index, scope.row)"
-                         :disabled="operate.disabledfunc ?operate.disabledfunc(scope.$index,scope.row) :false">{{(operate.type&&operate.type!=='text')||!operate.icon?operate.label:''}}</el-button>
-            </el-tooltip>
+            <div v-for="(operate,index) in column.operations" style="display: inline-block">
+              <el-tooltip placement="top"
+                          :content="operate.label"
+                          :key="index">
+                <el-popover placement="top" width="160" :ref="`popover-${index}-${scope.$index}`" v-if="operate.popover">
+                  <p style="text-align: center">{{operate.tips}}</p>
+                  <div style="text-align: center; margin: 0">
+                    <el-button type="primary" size="mini" @click="handleConfirm(index, scope.$index, scope.row, operate.func)">确定</el-button>
+                    <el-button type="primary" size="mini" @click="handleClose(index, scope.$index)">取消</el-button>
+                  </div>
+                  <el-button slot="reference" :type="operate.type||'text'" class="form-icon"
+                             v-show="operate.show?operate.show(scope.$index, scope.row):true"
+                             :key="index"
+                             :icon="operate.icon"
+                             :style="operate.disabledfunc?!operate.disabledfunc(scope.$index,scope.row)?'color:'+(operate.color||'#5576ed'):'':'color:'+(operate.color||'#5576ed')"
+                             :disabled="operate.disabledfunc ?operate.disabledfunc(scope.$index,scope.row) :false">{{(operate.type&&operate.type!=='text')||!operate.icon?operate.label:''}}</el-button>
+                </el-popover>
+                <el-button :type="operate.type||'text'" class="form-icon"
+                           v-else
+                           v-show="operate.show?operate.show(scope.$index, scope.row):true"
+                           :key="index"
+                           :icon="operate.icon"
+                           :style="operate.disabledfunc?!operate.disabledfunc(scope.$index,scope.row)?'color:'+(operate.color||'#5576ed'):'':'color:'+(operate.color||'#5576ed')"
+                           @click="operate.func(scope.$index, scope.row)"
+                           :disabled="operate.disabledfunc ?operate.disabledfunc(scope.$index,scope.row) :false">{{(operate.type&&operate.type!=='text')||!operate.icon?operate.label:''}}</el-button>
+              </el-tooltip>
+              <span v-if="index!==column.operations.length-1" style="margin: 0 7px;font-size: 16px;color: rgba(0,0,0,0.16)">|</span>
+            </div>
+
           </template>
         </el-table-column>
 
@@ -85,21 +103,6 @@
                          :min-width='column.minwidth'>
         </el-table-column>
 
-        <!--进度条-->
-        <el-table-column v-else-if="column.progress"
-                         :prop="column.prop"
-                         :label="column.label"
-                         :width="column.width"
-                         :min-width='column.minwidth'>
-          <template slot-scope="scope">
-            <el-progress :stroke-width="column.progress.strokeWidth || 20"
-                         :percentage="Number(scope.row[column.prop])"
-                         :color="column.progress.color ? column.progress.color(scope.$index, scope.row) : ''"
-                         :style="column.progress.width ? 'width: ' + (column.progress.width + 50) + 'px;' : 'width: 114px;'">
-            </el-progress>
-          </template>
-        </el-table-column>
-
         <!--普通展示列-->
         <el-table-column v-else
                          :prop="column.prop"
@@ -137,9 +140,7 @@
       columns: { type: Array },
       initCondition: { type: Object },
       hasIndex: { type: Boolean, default: false},   // 是否需要序号列
-      hasSelect: { type: Boolean, default: false},   // 是否需要选择框
-      searchAtOnce: { type: Boolean, default: true },   // 是否首次打开查询
-      emitAfterApi: { type: Function, default: () => {}}     // 调用Api后执行的钩子
+      hasSelect: { type: Boolean, default: false}   // 是否需要选择框
     },
     data() {
       return {
@@ -153,7 +154,8 @@
           orderColumn: '',
           orderBy: ''
         },
-        multipleSelection: []
+        multipleSelection: [],
+        popoverShow: false
       }
     },
     methods: {
@@ -166,7 +168,6 @@
           const { total, dataList } = res.data
           this.dataList = dataList
           this.total = total
-          this.emitAfterApi(this)
           this.listLoading = false
         }).catch((err) => {
           console.error(err)
@@ -230,10 +231,25 @@
        */
       handleSelectionChange(val) {
         this.multipleSelection = val
+      },
+      /**
+       * popover关闭
+       */
+      handleClose(index, rowIndex) {
+        const name = `popover-${index}-${rowIndex}`
+        this.$refs[name][1].doClose()
+      },
+      /**
+       * popover确认
+       */
+      handleConfirm(index, rowIndex, row, func) {
+        func(rowIndex, row)
+        this.handleClose(index, rowIndex)
       }
     },
     mounted() {
-      this.searchAtOnce && this.search(this.initCondition)
+      this.search(this.initCondition)
+      console.log(this.$refs)
     }
   }
 </script>
