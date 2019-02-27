@@ -25,9 +25,10 @@
             <div v-for="(operate,index) in column.operations" style="display: inline-block">
               <el-tooltip placement="top"
                           :content="operate.label"
+                          :disabled="!operate.tooltips"
                           :key="index">
                 <el-popover placement="top" width="160" :ref="`popover-${index}-${scope.$index}`" v-if="operate.popover">
-                  <p style="text-align: center">{{operate.tips}}</p>
+                  <p style="text-align: center">{{operate.tips(scope.$index, scope.row)}}</p>
                   <div style="text-align: center; margin: 0">
                     <el-button type="primary" size="mini" @click="handleConfirm(index, scope.$index, scope.row, operate.func)">确定</el-button>
                     <el-button type="primary" size="mini" @click="handleClose(index, scope.$index)">取消</el-button>
