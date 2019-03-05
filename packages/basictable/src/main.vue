@@ -22,16 +22,16 @@
                          fixed="right"
                          :min-width='column.minwidth'>
           <template slot-scope="scope">
-            <div v-for="(operate,index) in column.operations" style="display: inline-block">
+            <div v-for="(operate,index) in column.operations" style="display: inline-block" :class="(operate.show?operate.show(scope.$index, scope.row):true)?'show-sep':''">
               <el-tooltip placement="top"
                           :content="operate.label"
                           :disabled="!operate.tooltips"
                           :key="index">
-                <el-popover placement="top" width="160" :ref="`popover-${index}-${scope.$index}`" v-if="operate.popover">
+                <el-popover :placement="operate.popoverPlacement || 'top'" :width="operate.popoverWidth || 150" :ref="`popover-${index}-${scope.$index}`" v-if="operate.popover">
                   <p style="text-align: center">{{operate.tips(scope.$index, scope.row)}}</p>
                   <div style="text-align: center; margin: 0">
-                    <el-button type="primary" size="mini" @click="handleConfirm(index, scope.$index, scope.row, operate.func)">确定</el-button>
-                    <el-button type="primary" size="mini" @click="handleClose(index, scope.$index)">取消</el-button>
+                    <el-button size="mini" @click="handleConfirm(index, scope.$index, scope.row, operate.func)">确认</el-button>
+                    <el-button size="mini" @click="handleClose(index, scope.$index)">取消</el-button>
                   </div>
                   <el-button slot="reference" :type="operate.type||'text'" class="form-icon"
                              v-show="operate.show?operate.show(scope.$index, scope.row):true"
@@ -49,7 +49,6 @@
                            @click="operate.func(scope.$index, scope.row)"
                            :disabled="operate.disabledfunc ?operate.disabledfunc(scope.$index,scope.row) :false">{{(operate.type&&operate.type!=='text')||!operate.icon?operate.label:''}}</el-button>
               </el-tooltip>
-              <span v-if="index!==column.operations.length-1" style="margin: 0 7px;font-size: 16px;color: rgba(0,0,0,0.16)">|</span>
             </div>
 
           </template>
@@ -269,6 +268,22 @@
     }
     .el-tag {
       margin: 3px 10px;
+    }
+    /deep/ .form-icon{
+      padding-top: 0;
+      padding-bottom: 0;
+      border-radius: 0;
+    }
+    /deep/ .cell{
+      .show-sep+.show-sep{
+        border-left:1px solid rgba(0,0,0,0.16);
+        padding-left: 7px;
+        margin-left: 7px;
+        border-radius: 0;
+        .form-icon{
+          border-left: none;
+        }
+      }
     }
   }
 </style>
