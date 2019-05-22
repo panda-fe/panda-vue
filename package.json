@@ -1,7 +1,7 @@
 {
   "name": "panda-vue",
   "description": "Repository of Panda Front End Team",
-  "version": "0.1.15",
+  "version": "0.1.16",
   "author": "panda-fe<x020198@qq.com>",
   "main": "dist/panda-vue.js",
   "license": "MIT",
@@ -13,6 +13,9 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/panda-fe/panda-vue"
+  },
+  "gitHooks": {
+    "pre-commit": "npm run build"
   },
   "dependencies": {
     "vue": "^2.5.11"
