@@ -12,7 +12,7 @@
       <el-table-column type="selection" width="55" v-if="hasSelect"></el-table-column>
       <el-table-column type="index" width="40" v-if="hasIndex"></el-table-column>
       <template v-for="column in columns">
-
+        
         <!--按钮操作列-->
         <el-table-column v-if="column.operations"
                          :prop="column.prop"
@@ -38,7 +38,8 @@
                              :key="index"
                              :icon="operate.icon"
                              :style="operate.disabledfunc?!operate.disabledfunc(scope.$index,scope.row)?'color:'+(operate.color||'#5576ed'):'':'color:'+(operate.color||'#5576ed')"
-                             :disabled="operate.disabledfunc ?operate.disabledfunc(scope.$index,scope.row) :false">{{(operate.type&&operate.type!=='text')||!operate.icon?operate.label:''}}</el-button>
+                             :disabled="operate.disabledfunc ?operate.disabledfunc(scope.$index,scope.row) :false">{{(operate.type&&operate.type!=='text')||!operate.icon?operate.label:''}}
+                  </el-button>
                 </el-popover>
                 <el-button :type="operate.type||'text'" class="form-icon"
                            v-else
@@ -47,13 +48,14 @@
                            :icon="operate.icon"
                            :style="operate.disabledfunc?!operate.disabledfunc(scope.$index,scope.row)?'color:'+(operate.color||'#5576ed'):'':'color:'+(operate.color||'#5576ed')"
                            @click="operate.func(scope.$index, scope.row)"
-                           :disabled="operate.disabledfunc ?operate.disabledfunc(scope.$index,scope.row) :false">{{(operate.type&&operate.type!=='text')||!operate.icon?operate.label:''}}</el-button>
+                           :disabled="operate.disabledfunc ?operate.disabledfunc(scope.$index,scope.row) :false">{{(operate.type&&operate.type!=='text')||!operate.icon?operate.label:''}}
+                </el-button>
               </el-tooltip>
             </div>
-
+          
           </template>
         </el-table-column>
-
+        
         <!--点击内容弹出的列-->
         <el-table-column v-else-if="column.func || column.href"
                          :prop="column.prop"
@@ -76,7 +78,7 @@
             <!--</el-tooltip>-->
           </template>
         </el-table-column>
-
+        
         <!--角色管理使用，无需使用可以删除-->
         <el-table-column v-else-if="column.list"
                          :prop="column.prop"
@@ -91,7 +93,7 @@
             </el-tag>
           </template>
         </el-table-column>
-
+        
         <!--排序列，无需使用可以删除-->
         <el-table-column v-else-if="column.sortable"
                          sortable="custom"
@@ -102,7 +104,7 @@
                          :show-overflow-tooltip="column.tooltip"
                          :min-width='column.minwidth'>
         </el-table-column>
-
+        
         <!--普通展示列-->
         <el-table-column v-else
                          :prop="column.prop"
@@ -114,7 +116,7 @@
         </el-table-column>
       </template>
     </el-table>
-
+    
     <!--分页  -->
     <el-row>
       <el-col :span="24">
@@ -139,8 +141,8 @@
       api: { type: Function },    // 下个项目换名字
       columns: { type: Array },
       initCondition: { type: Object },
-      hasIndex: { type: Boolean, default: false},   // 是否需要序号列
-      hasSelect: { type: Boolean, default: false}   // 是否需要选择框
+      hasIndex: { type: Boolean, default: false },   // 是否需要序号列
+      hasSelect: { type: Boolean, default: false }   // 是否需要选择框
     },
     data() {
       return {
@@ -174,7 +176,7 @@
           this.listLoading = false
         })
       },
-
+      
       /**
        * 不含查询条件的查询
        */
@@ -186,7 +188,7 @@
         param.page = this.page
         this.getlist(param)
       },
-
+      
       /**
        * 查询按钮查询
        */
@@ -194,7 +196,7 @@
         this.storeParams = Object.assign({}, params)
         this.reSearch()
       },
-
+      
       /**
        * 处理页数变化
        */
@@ -206,7 +208,7 @@
         param.page = this.page
         setTimeout(() => this.getlist(param), 100)
       },
-
+      
       /**
        * 处理当前页改变
        */
@@ -236,7 +238,7 @@
        * popover关闭
        */
       handleClose(index, rowIndex) {
-        const name = `popover-${index}-${rowIndex}`
+        const name = `popover-${ index }-${ rowIndex }`
         this.$refs[name][1].doClose()
       },
       /**
@@ -249,7 +251,6 @@
     },
     mounted() {
       this.search(this.initCondition)
-      console.log(this.$refs)
     }
   }
 </script>
@@ -257,30 +258,29 @@
 <style lang="scss" scoped>
   .basic-table {
     .clickable-link {
-      /*white-space: nowrap;*/
-      /*      text-overflow: ellipsis;
-            -o-text-overflow: ellipsis;
-            overflow: hidden;*/
       font-size: 14px;
       color: #07f;
-      text-decoration: underline;
-      cursor: hand;
+      cursor: pointer;
     }
+    
     .el-tag {
       margin: 3px 10px;
     }
-    /deep/ .form-icon{
+    
+    /deep/ .form-icon {
       padding-top: 0;
       padding-bottom: 0;
       border-radius: 0;
     }
-    /deep/ .cell{
-      .show-sep+.show-sep{
-        border-left:1px solid rgba(0,0,0,0.16);
-        padding-left: 7px;
-        margin-left: 7px;
+    
+    /deep/ .cell {
+      .show-sep + .show-sep {
+        border-left: 1px solid rgba(0, 0, 0, 0.16);
+        padding-left: 8px;
+        margin-left: 8px;
         border-radius: 0;
-        .form-icon{
+        
+        .form-icon {
           border-left: none;
         }
       }
