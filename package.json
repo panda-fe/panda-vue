@@ -14,9 +14,6 @@
     "type": "git",
     "url": "git+https://github.com/panda-fe/panda-vue"
   },
-  "gitHooks": {
-    "pre-commit": "npm run build"
-  },
   "dependencies": {
     "vue": "^2.5.11"
   },
