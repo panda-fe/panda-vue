@@ -67,9 +67,10 @@
           <template slot-scope="scope">
             <!--<el-tooltip placement="top" :content="scope.row[column.prop]">     @mouseenter="enter"
                  @mouseleave="leave"-->
+            <span v-if='column.disabled'>{{scope.row[column.prop]}}</span>
             <a @click="column.func(scope.$index, scope.row)"
                class='clickable-link'
-               v-if='scope.row[column.prop]'>
+               v-else-if='scope.row[column.prop]'>
               {{scope.row[column.prop]}}
             </a>
             <span v-else-if='column.formatBeside'>{{column.formatBeside(scope.$index, scope.row)}}</span>
