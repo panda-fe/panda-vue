@@ -69,11 +69,10 @@
                  @mouseleave="leave"-->
             <a @click="column.func(scope.$index, scope.row)"
                class='clickable-link'
-               v-if='scope.row[column.prop]'
-            >
+               v-if='scope.row[column.prop]'>
               {{scope.row[column.prop]}}
             </a>
-            <span v-else='column.formatBeside'>{{column.formatBeside(scope.$index, scope.row)}}</span>
+            <span v-else-if='column.formatBeside'>{{column.formatBeside(scope.$index, scope.row)}}</span>
             <i v-if="column.icon&&column.showIcon&&column.showIcon(scope.$index, scope.row)" :class="column.icon"></i>
             <!--</el-tooltip>-->
           </template>
