@@ -67,7 +67,7 @@
           <template slot-scope="scope">
             <!--<el-tooltip placement="top" :content="scope.row[column.prop]">     @mouseenter="enter"
                  @mouseleave="leave"-->
-            <span v-if='column.disabled'>{{scope.row[column.prop]}}</span>
+            <span v-if='column.disabled && column.disabled(scope.$index, scope.row)'>{{scope.row[column.prop]}}</span>
             <a @click="column.func(scope.$index, scope.row)"
                class='clickable-link'
                v-else-if='scope.row[column.prop]'>
@@ -271,19 +271,6 @@
       padding-top: 0;
       padding-bottom: 0;
       border-radius: 0;
-    }
-    
-    /deep/ .cell {
-      .show-sep + .show-sep {
-        border-left: 1px solid rgba(0, 0, 0, 0.16);
-        padding-left: 8px;
-        margin-left: 8px;
-        border-radius: 0;
-        
-        .form-icon {
-          border-left: none;
-        }
-      }
     }
   }
 </style>
