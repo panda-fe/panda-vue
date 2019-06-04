@@ -141,6 +141,7 @@
       api: { type: Function },    // 下个项目换名字
       columns: { type: Array },
       initCondition: { type: Object },
+      initSearch: { type: Boolean, default: true },  // 是否初始化的时候就query
       hasIndex: { type: Boolean, default: false },   // 是否需要序号列
       hasSelect: { type: Boolean, default: false }   // 是否需要选择框
     },
@@ -250,7 +251,7 @@
       }
     },
     mounted() {
-      this.search(this.initCondition)
+      this.initSearch && this.search(this.initCondition)
     }
   }
 </script>
